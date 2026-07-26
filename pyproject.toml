@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cjm-speaker-diarization-adapter-interface"
+dynamic = ["version"]
+description = "Typed speaker-diarization task-adapter interface — SpeakerDiarizationAdapter ABC + GenericSpeakerDiarizationAdapter (thin pass-through around a diarization tool) and the SpeakerDiarizationToolProtocol. The SpeakerDiarizationResult data noun lives in cjm-capability-primitives; turns are ANONYMOUS clusters — identity is the correction TUI's assignment lane, never this interface's job."
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "Apache-2.0"}
+authors = [{name = "Christian J. Mills", email = "9126128+cj-mills@users.noreply.github.com"}]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+]
+dependencies = [
+    "cjm-substrate>=0.0.58",
+    "cjm-capability-primitives>=0.0.12",
+]
+
+[project.urls]
+Repository = "https://github.com/cj-mills/cjm-speaker-diarization-adapter-interface"
+
+[tool.setuptools.dynamic]
+version = {attr = "cjm_speaker_diarization_adapter_interface.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["cjm_speaker_diarization_adapter_interface*"]
