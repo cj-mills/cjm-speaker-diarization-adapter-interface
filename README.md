@@ -1,30 +1,33 @@
 # cjm-speaker-diarization-adapter-interface
 
-Typed speaker-diarization task-adapter interface for the
-[cjm-substrate](https://github.com/cj-mills/cjm-substrate) runtime:
+<!-- generated from the context graph by `cjm-context-graph readme` — do not edit by hand; edit the graph (the urge to hand-edit = move it on-graph) -->
 
-- **`SpeakerDiarizationToolProtocol`** — structural contract for diarization
-  tool capabilities: `diarize(audio, **kwargs) -> SpeakerDiarizationResult`
-  + `get_current_config()`.
-- **`SpeakerDiarizationAdapter`** — the task-adapter ABC
-  (`task_name = "speaker_diarization"`).
-- **`GenericSpeakerDiarizationAdapter`** — thin tool-agnostic pass-through,
-  reused by any conforming tool capability (e.g.
-  [cjm-capability-pyannote](https://github.com/cj-mills/cjm-capability-pyannote)).
+Adapter interface for speaker-diarization capabilities — the speaker_diarization task-channel contract (audio → typed SpeakerTurn/SpeakerDiarizationResult) that capability libs implement and workflow cores consume; the generic adapter owns the SQLite cache bookends (content-addressed, speaker-count hints fold into the config hash).
 
-The `SpeakerDiarizationResult` / `SpeakerTurn` data nouns live in
-[cjm-capability-primitives](https://github.com/cj-mills/cjm-capability-primitives)
-and are wire-registered (`speaker_diarization.result`), so results cross the
-worker boundary typed.
+## Modules
 
-**Scope**: diarization only — audio in, *anonymous* time-ranged speaker turns
-out. Turn times index into the caller's original audio; cluster labels
-(`SPEAKER_00`, …) are result-scoped. Mapping clusters to named identities is
-downstream human judgment (the correction TUI's assignment lane), never this
-interface's job.
+- **`cjm_speaker_diarization_adapter_interface.__init__`**
+- **`cjm_speaker_diarization_adapter_interface.adapter`** — The typed speaker-diarization task contract — the `SpeakerDiarizationAdapter` ABC + the `SpeakerDiarizationToolProtocol` structural contract (capability-unit Option C; session-D DECs 18d7de80 + d6df3a8e).
+- **`cjm_speaker_diarization_adapter_interface.generic`** — The generic (tool-agnostic) speaker-diarization adapter — cache-check, invoke the bound tool's pure-compute `diarize`, persist. Reused across every tool capability satisfying `SpeakerDiarizationToolProtocol`, exactly as `GenericVADAdapter` is reused across VAD tools.
+- **`cjm_speaker_diarization_adapter_interface.storage`** — Standardized SQLite storage for speaker-diarization results with content hashing.
 
-## Install
+## API
 
-```bash
-pip install cjm-speaker-diarization-adapter-interface
-```
+### `cjm_speaker_diarization_adapter_interface.adapter`
+
+- `SpeakerDiarizationAdapter` _class_ — Typed speaker-diarization task adapter: source audio path in,
+- `SpeakerDiarizationToolProtocol` _class_ — Structural contract for speaker-diarization tool capabilities.
+
+### `cjm_speaker_diarization_adapter_interface.generic`
+
+- `GenericSpeakerDiarizationAdapter` _class_ — Generic speaker-diarization adapter: cache-check -> pure-compute tool -> persist.
+
+### `cjm_speaker_diarization_adapter_interface.storage`
+
+- `SpeakerDiarizationRow` _class_ — A single row from the speaker_diarization_results table.
+- `SpeakerDiarizationStorage` _class_ — Standardized SQLite storage for speaker-diarization results.
+
+## Dependencies
+
+**Depends on:** `cjm-capability-primitives`, `cjm-substrate`
+**Used by:** `cjm-capability-pyannote`
