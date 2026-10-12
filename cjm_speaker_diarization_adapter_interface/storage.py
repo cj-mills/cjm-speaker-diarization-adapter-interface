@@ -26,6 +26,7 @@ from cjm_substrate.utils.hashing import hash_file
 @dataclass
 class SpeakerDiarizationRow:
     """A single row from the speaker_diarization_results table."""
+
     file_path: str       # Path to the analyzed (decoded PCM rendition) audio file
     file_hash: str       # Hash of the analyzed file in "algo:hexdigest" format
     config_hash: str     # Hash of the diarization config (tool config + speaker-count hints)

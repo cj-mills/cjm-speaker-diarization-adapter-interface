@@ -23,6 +23,7 @@ class SpeakerDiarizationToolProtocol(Protocol):
     anonymous speaker turns in that audio's coordinates. `get_current_config`
     supplies the effective config whose canonical hash joins downstream
     identity/provenance composites."""
+
     def diarize(self, audio: str, **kwargs) -> SpeakerDiarizationResult: ...
     def get_current_config(self) -> Dict[str, Any]: ...
 
