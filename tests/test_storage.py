@@ -1,8 +1,8 @@
 """Tests for the speaker-diarization storage layer — content-correct cache semantics on the VAD-adapter precedent."""
 
+from cjm_speaker_diarization_adapter_interface.storage import (SpeakerDiarizationRow,
+                                                               SpeakerDiarizationStorage)
 from cjm_substrate.utils.hashing import hash_file
-from cjm_speaker_diarization_adapter_interface.storage import (
-    SpeakerDiarizationRow, SpeakerDiarizationStorage)
 
 
 def _seeded_storage(tmp_path):

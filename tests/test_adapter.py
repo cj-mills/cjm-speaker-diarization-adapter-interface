@@ -1,12 +1,11 @@
 """Tests for the speaker-diarization adapter interface — protocol conformance + the generic pass-through."""
+
 from typing import Any, Dict
 
-from cjm_capability_primitives.speaker_diarization import (SpeakerDiarizationResult,
-                                                           SpeakerTurn)
-from cjm_speaker_diarization_adapter_interface.adapter import (
-    SpeakerDiarizationAdapter, SpeakerDiarizationToolProtocol)
-from cjm_speaker_diarization_adapter_interface.generic import (
-    GenericSpeakerDiarizationAdapter)
+from cjm_capability_primitives.speaker_diarization import SpeakerDiarizationResult, SpeakerTurn
+from cjm_speaker_diarization_adapter_interface.adapter import (SpeakerDiarizationAdapter,
+                                                               SpeakerDiarizationToolProtocol)
+from cjm_speaker_diarization_adapter_interface.generic import GenericSpeakerDiarizationAdapter
 
 
 class FakeDiarizerTool:
